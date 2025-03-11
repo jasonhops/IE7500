@@ -24,7 +24,10 @@ def convert_notebook_to_script(notebook_filename, script_filename):
                 f.write(source + '\n\n')
         
         print(f"Converted {notebook_filename} to {script_filename}")
-
+    
+    except Exception as e:
+        print(f"Failed to convert {notebook_filename}: {e}")
+        
 # List of notebooks to convert
 notebook_files = [
     "NaiveBayes_and_LSTM_model.ipynb",
