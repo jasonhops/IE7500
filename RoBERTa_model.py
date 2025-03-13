@@ -3,16 +3,14 @@
 
 import pandas as pd
 
-from google.colab import drive
+#from google.colab import drive
 
 
-drive.mount('/content/drive')
+#drive.mount('/content/drive')
 
-#for school OOD machines
-#df = pd.read_csv("Reviews.csv")
 
-#for goocle colab
-df = pd.read_csv("/content/drive/MyDrive/Colab Notebooks/SentimentAnalysis/Reviews.csv")
+df = pd.read_csv("Reviews.csv")
+#df = pd.read_csv("/content/drive/MyDrive/Colab Notebooks/SentimentAnalysis/Reviews.csv")
 
 df.head()
 
@@ -52,9 +50,6 @@ df["Combined_Text"] = df["Summary"].fillna('') + " " + df["Text"].fillna('')
 
 test_size = 0.2  # 20% test set
 
-#Stratify train-test split based on `Sentiment_label`
-#train_df, test_df = train_test_split(df, test_size=test_size, stratify=df["Sentiment_label"], random_state=42)
-
 # Stratify on `Score` instead of `Sentiment_label`
 train_df, test_df = train_test_split(df, test_size=0.2, stratify=df["Score"], random_state=42)
 
@@ -63,7 +58,11 @@ print("Train Set Score Distribution:\n", train_df["Score"].value_counts(normaliz
 print("\nTest Set Score Distribution:\n", test_df["Score"].value_counts(normalize=True))
 
 # Sample exactly 12,500 reviews for `test_df`
-test_df = test_df.groupby("Sentiment_label", group_keys=False).apply(lambda x: x.sample(n=int(12500 * len(x) / len(test_df)), random_state=42))
+test_df = (
+    test_df.groupby("Sentiment_label", group_keys=False)
+    .apply(lambda x: x.sample(n=min(int(12500 * len(x) / len(test_df)), len(x)), random_state=42))
+    .reset_index(drop=True)
+)
 
 #Ensure `test_df` includes `Combined_Text`
 test_df["Combined_Text"] = test_df["Summary"].fillna('') + " " + test_df["Text"].fillna('')
@@ -95,7 +94,7 @@ original_distribution = df["Sentiment_label"].value_counts()
 
 # Plot the distribution
 plt.figure(figsize=(6, 4))
-sns.barplot(x=original_distribution.index, y=original_distribution.values, palette=["red", "green"])
+sns.barplot(x=original_distribution.index, y=original_distribution.values, hue=original_distribution.index, palette=["red", "green"], legend=False)
 plt.title("Original Sentiment Distribution")
 plt.xlabel("Sentiment Label")
 plt.ylabel("Review Count")
@@ -105,20 +104,20 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Compute class distributions
-train_score_distribution = train_df["Score"].value_counts(normalize=True)
+train_score_distribution = train_oversampled_df["Score"].value_counts(normalize=True)
 test_score_distribution = test_df["Score"].value_counts(normalize=True)
 
 # Set up subplots
 fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
 
 # Train Set Score Distribution
-sns.barplot(x=train_score_distribution.index, y=train_score_distribution.values, ax=axes[0])
-axes[0].set_title("Train Set Score Distribution")
+sns.barplot(x=train_score_distribution.index, y=train_score_distribution.values, hue=train_score_distribution.index, ax=axes[0], legend=False)
+axes[0].set_title("Train Oversampled Set Score Distribution")
 axes[0].set_ylabel("Proportion")
 axes[0].set_xlabel("Score")
 
 # Test Set Score Distribution
-sns.barplot(x=test_score_distribution.index, y=test_score_distribution.values, ax=axes[1])
+sns.barplot(x=test_score_distribution.index, y=test_score_distribution.values, hue=test_score_distribution.index, ax=axes[1], legend=False)
 axes[1].set_title("Test Set Score Distribution")
 axes[1].set_xlabel("Score")
 
@@ -137,13 +136,13 @@ test_distribution = test_df["Sentiment_label"].value_counts()
 fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
 
 # Oversampled Train Set Distribution
-sns.barplot(x=oversampled_train_distribution.index, y=oversampled_train_distribution.values, ax=axes[0], palette=["blue", "orange"])
+sns.barplot(x=oversampled_train_distribution.index, y=oversampled_train_distribution.values, ax=axes[0], hue=oversampled_train_distribution.index, palette=["orange", "blue"], legend=False)
 axes[0].set_title("Train Set Distribution (After Oversampling)")
 axes[0].set_ylabel("Review Count")
 axes[0].set_xlabel("Sentiment Label")
 
 # Test Set Distribution
-sns.barplot(x=test_distribution.index, y=test_distribution.values, ax=axes[1], palette=["blue", "orange"])
+sns.barplot(x=test_distribution.index, y=test_distribution.values, ax=axes[1], hue=test_distribution.index, palette=["blue", "orange"], legend=False)
 axes[1].set_title("Test Set Distribution")
 axes[1].set_xlabel("Sentiment Label")
 
@@ -152,9 +151,6 @@ plt.show()
 
 
 test_df.head()
-
-#pip install transformers pandas torch tqdm
-
 
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification

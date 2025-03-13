@@ -40,7 +40,52 @@ train_size = 0.8  # 80% train split
 train_df, test_df = train_test_split(df, test_size=test_size, stratify=df["Score"], random_state=42)
 test_df=test_df.sample(n=12500, random_state=42)
 train_oversampled_df = pd.concat([train_df[train_df["Sentiment_label"]=='positive'].sample(n=25000, random_state=42), train_df[train_df["Sentiment_label"]=='negative'].sample(n=25000, random_state= 42)], ignore_index=True)
-#train_oversampled_df.to_csv("amazon_reviews_oversample_minority_25k.csv", index= False)
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+# Count positive and negative reviews
+original_distribution = train_df["Sentiment_label"].value_counts()
+
+# Plot the distribution
+plt.figure(figsize=(6, 4))
+sns.barplot(x=original_distribution.index, y=original_distribution.values, palette=["red", "green"])
+plt.title("Original Sentiment Distribution")
+plt.xlabel("Sentiment Label")
+plt.ylabel("Review Count")
+plt.show
+
+# Count positive and negative reviews
+original_distribution = train_oversampled_df["Sentiment_label"].value_counts()
+
+# Plot the distribution
+plt.figure(figsize=(6, 4))
+sns.barplot(x=original_distribution.index, y=original_distribution.values, palette=["red", "green"])
+plt.title("Oversampled Sentiment Distribution")
+plt.xlabel("Sentiment Label")
+plt.ylabel("Review Count")
+plt.show()
+
+# Compute class distributions
+train_score_distribution = train_oversampled_df["Score"].value_counts(normalize=True)
+test_score_distribution = test_df["Score"].value_counts(normalize=True)
+
+# Set up subplots
+fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
+
+# Train Set Score Distribution
+sns.barplot(x=train_score_distribution.index, y=train_score_distribution.values, ax=axes[0])
+axes[0].set_title("Train Set Score Distribution")
+axes[0].set_ylabel("Proportion")
+axes[0].set_xlabel("Score")
+
+# Test Set Score Distribution
+sns.barplot(x=test_score_distribution.index, y=test_score_distribution.values, ax=axes[1])
+axes[1].set_title("Test Set Score Distribution")
+axes[1].set_xlabel("Score")
+
+plt.tight_layout()
+plt.show()
 
 
 import nltk
@@ -155,13 +200,15 @@ misclassified_reviews = pd.DataFrame({
 
 print(misclassified_reviews.head(10))
 
-# Model Evaluation
+
+
 # accuracy measures the overall correctness of the model(correct_pred / total_pred)
 
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.4f}")
 
 #Classification report
+
 #Precision:How many of the predicted positives were actually positive? (Lower False Positives)
 #Recall :How many of the actual positives were correctly identified? (Lower False Negatives)
 #F1score: The harmonic mean of precision & recall (a balance between the two)
@@ -237,6 +284,11 @@ score, accuracy = model.evaluate(x_test, test_labels, batch_size=batch_size)
 print("Test loss:", score)
 print("Test accuracy:", accuracy)
 
+print("Test loss:", score)
+print("Test accuracy:", accuracy)
+
+
+
 from sklearn.metrics import classification_report, confusion_matrix
 
 # Generate predicted probabilities
@@ -256,6 +308,8 @@ plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix')
 plt.show()
+
+
 
 
 
