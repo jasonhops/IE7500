@@ -47,3 +47,9 @@ Implemented three different models for sentiment classification:
    - Required **GPU acceleration** due to high computational cost.
 
 Research Paper Reference: [A survey on sentiment analysis methods, applications, and challenges](https://link.springer.com/article/10.1007/s10462-022-10144-1)
+
+### **Setup Instructions**
+### **1.Install Jupyter Notebook**  
+```bash
+pip install jupyter
+
