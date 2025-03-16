@@ -49,20 +49,20 @@ Implemented three different models for sentiment classification:
 Research Paper Reference: [A survey on sentiment analysis methods, applications, and challenges](https://link.springer.com/article/10.1007/s10462-022-10144-1)
 
 ### **Setup Instructions**
-### **1. Install Jupyter Notebook**
+#### **1. Install Jupyter Notebook**
 ```bash
 pip install jupyter
  ``` 
 
-### **2. Install Dependencies**
+#### **2. Install Dependencies**
 ```bash
 pip install torch transformers nltk tensorflow scikit-learn pandas numpy matplotlib seaborn
  ```
-### **3. Run Jupyter Notebook**
+#### **3. Run Jupyter Notebook**
 ```bash
 jupyter notebook
  ```
-### **4. Navigate to the notebook files (.ipynb) and execute them step by step.**
+#### **4. Navigate to the notebook files (.ipynb) and execute them step by step.**
 - NaiveBayes_and_LSTM_model
 - RoBERTa_model
 
