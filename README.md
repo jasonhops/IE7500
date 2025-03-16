@@ -15,7 +15,7 @@
 2. **Adjusted Approach (for better balance):**  
    - **Positive:** Score = **4, 5**  
    - **Negative:** Score = **1, 2, 3**
-  ## ⚙️ Implementation Steps  
+  ###Implementation Steps  
 
 ### **1. Data Preprocessing**
 - Combined `Summary` and `Text` for better sentiment representation.  
