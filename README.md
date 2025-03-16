@@ -41,7 +41,7 @@ Implemented three different models for sentiment classification:
    - The LSTM model with a F1 score of 0.88 is quite good for positive sentiment but is unable to pick out negative reviews well with F1 score of 0.01. The relatively small training set for LSTM and a lack of large pre-training corpus compared to Transformer models severely impacted suitability for sentiment analysis.
 
 #### **Transformer-Based Model**
-4. **RoBERTa (Pretrained)**
+4. **RoBERTa [Pretrained](https://huggingface.co/siebert/sentiment-roberta-large-english)**
    - Used **`siebert/sentiment-roberta-large-english`**.
    - Outperformed previous models, providing **better contextual understanding**.
    - Required **GPU acceleration** due to high computational cost.
