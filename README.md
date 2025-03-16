@@ -14,8 +14,9 @@
 
 2. **Adjusted Approach (for better balance):**  
    - **Positive:** Score = **4, 5**  
-   - **Negative:** Score = **1, 2, 3**
-  ###Implementation Steps  
+   - **Negative:** Score = **1, 2,3**
+
+###Implementation Steps  
 
 ### **1. Data Preprocessing**
 - Combined `Summary` and `Text` for better sentiment representation.  
@@ -25,15 +26,15 @@
 ### **2. Model Development**
 Implemented three different models for sentiment classification:
 
-#### **Traditional Machine Learning**
+#### **Traditional Machine Learning Model**
 1. **Naïve Bayes using NLTK**  
    - Extracted unigram features.  
-   - Took **2+ hours to train** and achieved **61% accuracy** initially.  
-   - Adjusting the sentiment threshold improved accuracy to **71.45%**, but the model was still **biased towards positive reviews**.  
-
+   - Took **30+ minutes to train** and achieved **50% accuracy**.
 2. **MultinomialNB from scikit-learn**  
    - Used **TF-IDF vectorization**.  
    - Faster training compared to NLTK's implementation.
+   - Received accuracy of 86% but lower precision for negative reviews suggests the model struggles with identifying negative sentiment accurately.
+
   #### **Deep Learning**
 3. **LSTM (Long Short-Term Memory)**
    - Used **word embeddings (random initialization)**.
