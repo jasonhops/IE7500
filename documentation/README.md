@@ -62,7 +62,7 @@ pip install torch transformers nltk tensorflow scikit-learn pandas numpy matplot
 ```bash
 jupyter notebook
  ```
-#### **5. Download the Reviews.csv.xz file , unzip it and upload it in the code directory **
+#### **5. Download the Reviews.csv.xz file , unzip it and upload it in the code directory.**
 #### **4. Navigate to the notebook files (.ipynb) and execute them step by step.**
 - NaiveBayes_and_LSTM_model
 - RoBERTa_model
