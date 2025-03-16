@@ -50,7 +50,6 @@ Research Paper Reference: [A survey on sentiment analysis methods, applications,
 
 ### **Setup Instructions**
 ### **1. Install Jupyter Notebook**  
-```bash
 pip install jupyter
 
 ### **2. Install Dependencies
